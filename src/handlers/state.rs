@@ -1,5 +1,6 @@
 use std::{
     cmp::{Eq, PartialEq},
+    fmt,
     str::FromStr,
 };
 
@@ -13,13 +14,12 @@ pub enum NormalMode {
     Search,
 }
 
-impl ToString for NormalMode {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Insert => "insert",
-            Self::Search => "search",
+impl fmt::Display for NormalMode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            Self::Insert => f.write_str("insert"),
+            Self::Search => f.write_str("search"),
         }
-        .to_string()
     }
 }
 
@@ -35,27 +35,21 @@ impl FromStr for NormalMode {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Serialize, DeserializeFromStr)]
+#[derive(Debug, Default, PartialEq, Eq, Clone, Serialize, DeserializeFromStr)]
 pub enum State {
+    #[default]
     Dashboard,
     Normal,
     Help,
 }
 
-impl Default for State {
-    fn default() -> Self {
-        Self::Dashboard
-    }
-}
-
-impl ToString for State {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Dashboard => "dashboard",
-            Self::Normal => "normal",
-            Self::Help => "help",
+impl fmt::Display for State {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            Self::Dashboard => f.write_str("dashboard"),
+            Self::Normal => f.write_str("normal"),
+            Self::Help => f.write_str("help"),
         }
-        .to_string()
     }
 }
 
